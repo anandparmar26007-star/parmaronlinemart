@@ -1,49 +1,35 @@
-import React, { useState } from 'react';
-import ProductGrid from '../Component/ProductGrid';
-import { products } from '../data/products';
+import React, { useState } from 'react'
+import productsData from '../data/products'
+import ProductCard from '../Component/ProductCard'
 
-export default function Products() {
-  const [filteredProducts, setFilteredProducts] = useState(products);
-  const [selectedCategory, setSelectedCategory] = useState('All');
+const ProductsPage = () => {
+  const [q, setQ] = useState('')
+  const [category, setCategory] = useState('All')
 
-  const categories = ['All', ...new Set(products.map(p => p.category))];
+  const categories = ['All', ...Array.from(new Set(productsData.map(p => p.category)))]
 
-  const handleFilter = (category) => {
-    setSelectedCategory(category);
-    if (category === 'All') {
-      setFilteredProducts(products);
-    } else {
-      setFilteredProducts(products.filter(p => p.category === category));
-    }
-  };
+  const filtered = productsData.filter(p => (
+    (category === 'All' || p.category === category) &&
+    (q === '' || p.name.toLowerCase().includes(q.toLowerCase()))
+  ))
 
   return (
-    <main style={{ minHeight: '80vh' }}>
-      <div style={{ maxWidth: '1200px', margin: '0 auto', padding: '2rem' }}>
-        <h1>Our Products</h1>
-        
-        <div style={{ marginBottom: '2rem', display: 'flex', gap: '1rem', flexWrap: 'wrap' }}>
-          {categories.map(category => (
-            <button
-              key={category}
-              onClick={() => handleFilter(category)}
-              style={{
-                padding: '0.5rem 1rem',
-                border: 'none',
-                borderRadius: '4px',
-                cursor: 'pointer',
-                backgroundColor: selectedCategory === category ? '#667eea' : '#ddd',
-                color: selectedCategory === category ? 'white' : '#333',
-                fontWeight: 'bold',
-              }}
-            >
-              {category}
-            </button>
-          ))}
-        </div>
-
-        <ProductGrid products={filteredProducts} />
+    <div className="container py-4">
+      <div className="d-flex gap-2 mb-3">
+        <select className="form-select w-auto" value={category} onChange={e => setCategory(e.target.value)}>
+          {categories.map(c => <option key={c} value={c}>{c}</option>)}
+        </select>
+        <input className="form-control" placeholder="Search products..." value={q} onChange={e => setQ(e.target.value)} />
       </div>
-    </main>
-  );
+      <div className="row g-3">
+        {filtered.map(p => (
+          <div className="col-6 col-md-4 col-lg-3" key={p.id}>
+            <ProductCard product={p} />
+          </div>
+        ))}
+      </div>
+    </div>
+  )
 }
+
+export default ProductsPage

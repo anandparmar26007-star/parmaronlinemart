@@ -1,47 +1,48 @@
-import React, { createContext, useState, useContext } from 'react';
+/* eslint-disable react-refresh/only-export-components */
+import React, { createContext, useContext, useReducer } from 'react'
 
-const StoreContext = createContext();
+const StoreContext = createContext()
 
-export const StoreProvider = ({ children }) => {
-  const [cart, setCart] = useState([]);
-  const [wishlist, setWishlist] = useState([]);
-  const [user, setUser] = useState(null);
-  const [orders, setOrders] = useState([]);
+const initialState = {
+  cart: [],
+  wishlist: []
+}
 
-  const addToCart = (product) => {
-    setCart([...cart, product]);
-  };
+function reducer(state, action){
+  switch(action.type){
+    case 'ADD_TO_CART': {
+      const exists = state.cart.find(i => i.id === action.payload.id)
+      if(exists) {
+        return {
+          ...state,
+          cart: state.cart.map(i => i.id === action.payload.id ? { ...i, qty: i.qty + 1 } : i)
+        }
+      }
+      return { ...state, cart: [...state.cart, { ...action.payload, qty: 1 }] }
+    }
+    case 'REMOVE_FROM_CART':
+      return { ...state, cart: state.cart.filter(i => i.id !== action.payload) }
+    case 'ADD_TO_WISHLIST':
+      if(state.wishlist.find(i => i.id === action.payload.id)) return state
+      return { ...state, wishlist: [...state.wishlist, action.payload] }
+    case 'REMOVE_FROM_WISHLIST':
+      return { ...state, wishlist: state.wishlist.filter(i => i.id !== action.payload) }
+    case 'CLEAR_CART':
+      return { ...state, cart: [] }
+    default:
+      return state
+  }
+}
 
-  const removeFromCart = (productId) => {
-    setCart(cart.filter(item => item.id !== productId));
-  };
-
-  const addToWishlist = (product) => {
-    setWishlist([...wishlist, product]);
-  };
-
-  const removeFromWishlist = (productId) => {
-    setWishlist(wishlist.filter(item => item.id !== productId));
-  };
-
+export function StoreProvider({ children }){
+  const [state, dispatch] = useReducer(reducer, initialState)
   return (
-    <StoreContext.Provider
-      value={{
-        cart,
-        addToCart,
-        removeFromCart,
-        wishlist,
-        addToWishlist,
-        removeFromWishlist,
-        user,
-        setUser,
-        orders,
-        setOrders,
-      }}
-    >
+    <StoreContext.Provider value={{ state, dispatch }}>
       {children}
     </StoreContext.Provider>
-  );
-};
+  )
+}
 
-export const useStore = () => useContext(StoreContext);
+export function useStore(){
+  return useContext(StoreContext)
+}

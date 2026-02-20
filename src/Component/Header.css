@@ -1,75 +1,118 @@
-.header {
-  background-color: #2c3e50;
-  color: white;
-  padding: 1rem 0;
-  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
-  position: sticky;
-  top: 0;
-  z-index: 100;
+header{
+  width:100%;
+  height:80px;
+  margin: auto;
+  padding:15px 0px;
 }
 
-.header .container {
-  max-width: 1200px;
-  margin: 0 auto;
-  padding: 0 1rem;
+.left-corner{
+  position:fixed;
+  top:10px; /* keep logo near the top */
+  left:10px;
+  width:140px; /* wider to fit text */
+  height:auto;
+  z-index:10000;
 }
 
-.header-content {
+/* Slightly reduce header search left offset to align with new logo */
+.headersearch{
+  left: 170px;
+}
+
+.header-actions a{
+  color: #1f6f4d;
+  text-decoration: none;
+}
+.header-actions .btn-light{
+  background: transparent;
+  border: 1px solid rgba(31,111,77,0.08);
+  color: #1f6f4d;
+}
+.header-actions .btn-light:hover{
+  background: rgba(31,111,77,0.04);
+}
+.header-actions .btn-success{
+  background: linear-gradient(90deg,#3bb77e,#2ea06a);
+  border: none;
+}
+.header-actions .badge{
+  font-size: 0.65rem;
+  padding: 0.35rem 0.45rem;
+}
+
+/* icon style for compact header buttons */
+.icon-btn{
+  display:inline-flex; align-items:center; gap:6px; padding:6px 8px; border-radius:6px; background: transparent; border: 1px solid rgba(31,111,77,0.06);
+}
+.icon-btn svg{ display:block }
+.icon-btn:hover{ background: rgba(31,111,77,0.04) }
+.search-icon{ display:inline-flex; align-items:center; justify-content:center; padding:0 8px; background:transparent; border-right: none }
+
+/* small spacing for header action labels on larger screens */
+.header-actions .d-none.d-md-inline{ font-weight:600; color: #134e39 }
+
+
+
+/* Fixed search bar at the top (use class name that exists in JSX) */
+.headersearch{
+  position: fixed;
+  top: 12px; /* slight offset from top */
+  left: 170px; /* leave space for the fixed logo (140px width + 30px gap) */
+  right: 20px; /* stretch to near the right edge */
+  z-index: 9999;
+  height: 44px; /* reduced height to make the bar smaller */
   display: flex;
-  justify-content: space-between;
   align-items: center;
+  background: #fff;
+  padding: 0 10px; /* slightly less horizontal padding */
+  border-radius: 6px;
+  box-shadow: 0 1px 6px rgba(0,0,0,0.06);
 }
 
-.logo {
-  font-size: 1.5rem;
-  font-weight: bold;
-  color: #fff;
-  text-decoration: none;
+/* Prevent page content from being hidden behind the fixed header/search */
+body{
+  padding-top: 64px; /* reduced to match smaller header */
 }
 
-.nav {
-  display: flex;
-  gap: 2rem;
-}
+/* Responsive adjustments */
+@media (max-width: 767.98px){
+  .left-corner{
+    position: static;
+    width: 120px;
+    margin-left: 10px;
+  }
+  .headersearch{
+    position: static;
+    top: auto;
+    left: auto;
+    right: auto;
+    height: auto;
+    box-shadow: none;
+    margin: 8px 10px;
+    background: transparent;
+    padding: 0;
+  }
+  header{
+    padding: 8px 0;
+  }
+  body{ padding-top: 0; }
 
-.nav a {
-  color: #fff;
-  text-decoration: none;
-  transition: color 0.3s;
-}
-
-.nav a:hover {
-  color: #f39c12;
-}
-
-.header-icons {
-  display: flex;
-  gap: 1rem;
-}
-
-.icon-link {
-  color: #fff;
-  text-decoration: none;
-  transition: color 0.3s;
-}
-
-.icon-link:hover {
-  color: #f39c12;
-}
-
-@media (max-width: 768px) {
-  .header-content {
-    flex-direction: column;
-    gap: 1rem;
+  /* mobile menu */
+  .hamburger{ border: none; background: transparent }
+  .mobile-menu{
+    position: absolute; left:0; right:0; top:72px; background: #fff; border-top:1px solid rgba(0,0,0,0.04); z-index:10001; box-shadow: 0 6px 20px rgba(0,0,0,0.06);
   }
 
-  .nav {
-    gap: 1rem;
-    font-size: 0.9rem;
+  .search-overlay{
+    position: absolute; left:0; right:0; top:72px; background: #fff; z-index:10002; border-top: 1px solid rgba(0,0,0,0.04); box-shadow: 0 6px 20px rgba(0,0,0,0.06);
   }
 
-  .header-icons {
-    gap: 0.5rem;
-    font-size: 0.9rem;
-  }
+  .cart-dropdown{ position: absolute; right: 10px; top: 58px; z-index:10002 }
 }
+
+/* Desktop adjustments */
+@media (min-width: 768px){
+  .site-header{ position: sticky; top:0; background: rgba(255,255,255,0.98); z-index:10000; box-shadow: 0 1px 6px rgba(0,0,0,0.04); }
+  .cart-dropdown{ position: absolute; right: 0; top: 58px; }
+}
+

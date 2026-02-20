@@ -1,37 +1,35 @@
-import React from 'react';
-import { BrowserRouter, Routes, Route } from 'react-router-dom';
-import Header from './Component/Header';
-import Footer from './Component/Footer';
-import { StoreProvider } from './context/StoreContext';
-import Home from './pages/Home';
-import Products from './pages/Products';
-import ProductDetail from './pages/ProductDetail';
-import Cart from './pages/Cart';
-import Wishlist from './pages/Wishlist';
-import Orders from './pages/Orders';
-import Admin from './pages/Admin';
-import './App.css';
+import React from 'react'
+import 'bootstrap/dist/css/bootstrap.min.css'
+import { BrowserRouter, Routes, Route } from 'react-router-dom'
+import { StoreProvider } from './context/StoreContext'
+import Header from './Component/Header.jsx'
+import Hero from './Component/Hero.jsx'
+import ProductGrid from './Component/ProductGrid.jsx'
+import Footer from './Footer.jsx'
+import ProductsPage from './pages/Products.jsx'
+import CartPage from './pages/Cart.jsx'
+import WishlistPage from './pages/Wishlist.jsx'
+import OrdersPage from './pages/Orders.jsx'
+import ProductDetail from './pages/ProductDetail.jsx'
+import Home from './pages/Home.jsx'
 
-function App() {
+const App = () => {
   return (
     <StoreProvider>
       <BrowserRouter>
-        <div className="app">
-          <Header />
-          <Routes>
-            <Route path="/" element={<Home />} />
-            <Route path="/products" element={<Products />} />
-            <Route path="/product/:id" element={<ProductDetail />} />
-            <Route path="/cart" element={<Cart />} />
-            <Route path="/wishlist" element={<Wishlist />} />
-            <Route path="/orders" element={<Orders />} />
-            <Route path="/admin" element={<Admin />} />
-          </Routes>
-          <Footer />
-        </div>
+        <Header />
+        <Routes>
+          <Route path="/" element={<Home/>} />
+          <Route path="/products" element={<ProductsPage/>} />
+          <Route path="/products/:id" element={<ProductDetail/>} />
+          <Route path="/cart" element={<CartPage/>} />
+          <Route path="/wishlist" element={<WishlistPage/>} />
+          <Route path="/orders" element={<OrdersPage/>} />
+        </Routes>
+        <Footer />
       </BrowserRouter>
     </StoreProvider>
-  );
+  )
 }
 
 export default App;

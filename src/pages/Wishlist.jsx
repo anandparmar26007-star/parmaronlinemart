@@ -1,48 +1,32 @@
-import React from 'react';
-import { useStore } from '../context/StoreContext';
-import { Link } from 'react-router-dom';
+import React from 'react'
+import { useStore } from '../context/StoreContext'
 
-export default function Wishlist() {
-  const { wishlist, removeFromWishlist } = useStore();
-
-  if (wishlist.length === 0) {
-    return (
-      <main style={{ minHeight: '80vh', display: 'flex', alignItems: 'center', justifyContent: 'center' }}>
-        <div style={{ textAlign: 'center' }}>
-          <h1>Your wishlist is empty</h1>
-          <Link to="/products" style={{ color: '#667eea', textDecoration: 'none' }}>
-            Continue Shopping
-          </Link>
-        </div>
-      </main>
-    );
-  }
-
+const WishlistPage = () => {
+  const { state, dispatch } = useStore()
   return (
-    <main style={{ minHeight: '80vh', maxWidth: '1200px', margin: '0 auto', padding: '2rem' }}>
-      <h1>My Wishlist</h1>
-      
-      <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fill, minmax(250px, 1fr))', gap: '2rem' }}>
-        {wishlist.map(item => (
-          <div key={item.id} style={{ border: '1px solid #ddd', borderRadius: '8px', padding: '1rem' }}>
-            <h3>{item.name}</h3>
-            <p>₹{item.price}</p>
-            <button
-              onClick={() => removeFromWishlist(item.id)}
-              style={{
-                padding: '0.5rem 1rem',
-                background: '#ff6b6b',
-                color: 'white',
-                border: 'none',
-                borderRadius: '4px',
-                cursor: 'pointer',
-              }}
-            >
-              Remove
-            </button>
-          </div>
-        ))}
-      </div>
-    </main>
-  );
+    <div className="container py-4">
+      <h3>Your wishlist</h3>
+      {state.wishlist.length === 0 ? <p>Your wishlist is empty.</p> : (
+        <div className="row g-3">
+          {state.wishlist.map(i => (
+            <div key={i.id} className="col-6 col-md-3">
+              <div className="card">
+                <img src={i.image} alt={i.name} className="card-img-top" style={{height:140, objectFit:'cover'}} onError={(e)=>{e.target.src='/src/assets/Images/placeholder.svg'}} />
+                <div className="card-body p-2">
+                  <div className="small fw-bold">{i.name}</div>
+                  <div className="small text-muted">${i.price.toFixed(2)}</div>
+                  <div className="mt-2 d-flex gap-2">
+                    <button className="btn btn-sm btn-primary" onClick={()=>dispatch({type:'ADD_TO_CART', payload:i})}>Add</button>
+                    <button className="btn btn-sm btn-outline-secondary" onClick={()=>dispatch({type:'REMOVE_FROM_WISHLIST', payload:i.id})}>Remove</button>
+                  </div>
+                </div>
+              </div>
+            </div>
+          ))}
+        </div>
+      )}
+    </div>
+  )
 }
+
+export default WishlistPage
