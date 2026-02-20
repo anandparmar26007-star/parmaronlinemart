@@ -1,0 +1,30 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 500 120" width="500" height="120">
+
+  <!-- Blue Gradient for Text -->
+  <defs>
+    <linearGradient id="blueGradient" x1="0%" y1="0%" x2="100%" y2="0%">
+      <stop offset="0%" stop-color="#0d47a1"></stop>
+      <stop offset="50%" stop-color="#1976d2"></stop>
+      <stop offset="100%" stop-color="#42a5f5"></stop>
+    </linearGradient>
+  </defs>
+
+  <!-- Shopping Cart Icon (Blue) -->
+  <g transform="translate(10,25)">
+    <circle cx="25" cy="60" r="6" fill="#1976d2"></circle>
+    <circle cx="55" cy="60" r="6" fill="#1976d2"></circle>
+    <path d="M5 10 H75 L60 50 H20 Z" fill="none" stroke="#1976d2" stroke-width="4"></path>
+    <line x1="15" y1="10" x2="5" y2="0" stroke="#1976d2" stroke-width="4"></line>
+  </g>
+
+  <!-- Main Brand Name -->
+  <text x="110" y="70" font-family="Arial, Helvetica, sans-serif" font-size="42" font-weight="bold" fill="url(#blueGradient)">
+    PARMAR
+  </text>
+
+  <!-- Subtitle -->
+  <text x="110" y="100" font-family="Arial, Helvetica, sans-serif" font-size="20" fill="#1565c0" letter-spacing="2">
+    BROTHERS MARTS
+  </text>
+
+</svg>
