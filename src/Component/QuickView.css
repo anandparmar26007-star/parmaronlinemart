@@ -1,0 +1,106 @@
+.quick-view-overlay {
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background: rgba(0, 0, 0, 0.5);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  z-index: 1000;
+}
+
+.quick-view-modal {
+  background: white;
+  border-radius: 8px;
+  max-width: 600px;
+  width: 90%;
+  max-height: 80vh;
+  overflow-y: auto;
+  position: relative;
+}
+
+.close-btn {
+  position: absolute;
+  top: 1rem;
+  right: 1rem;
+  background: none;
+  border: none;
+  font-size: 1.5rem;
+  cursor: pointer;
+  z-index: 10;
+}
+
+.quick-view-content {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 2rem;
+  padding: 2rem;
+}
+
+.qv-image {
+  width: 100%;
+  min-width: 0;
+}
+
+.qv-image img {
+  width: 100%;
+  border-radius: 8px;
+}
+
+.qv-info h2 {
+  margin: 0 0 0.5rem;
+  font-size: 1.8rem;
+}
+
+.qv-category {
+  color: #666;
+  margin: 0.25rem 0;
+}
+
+.qv-description {
+  color: #888;
+  line-height: 1.6;
+  margin: 1rem 0;
+}
+
+.qv-price {
+  font-size: 2rem;
+  font-weight: bold;
+  color: #f39c12;
+  margin: 1rem 0;
+}
+
+.qv-btn {
+  width: 100%;
+  padding: 1rem;
+  background-color: #667eea;
+  color: white;
+  border: none;
+  border-radius: 4px;
+  font-size: 1rem;
+  font-weight: bold;
+  cursor: pointer;
+  transition: background-color 0.3s;
+}
+
+.qv-btn:hover {
+  background-color: #5568d3;
+}
+
+@media (max-width: 768px) {
+  .quick-view-content {
+    grid-template-columns: 1fr;
+    gap: 1rem;
+    padding: 1rem;
+  }
+
+  .qv-info h2 {
+    font-size: 1.4rem;
+  }
+
+  .qv-price {
+    font-size: 1.5rem;
+  }
+}
